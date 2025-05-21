@@ -105,7 +105,7 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_admin'])){
               <div class="col-md-12 grid-margin">
                 <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome <?= $_SESSION['nama_pelayan'] ?></h3>
+                    <h3 class="font-weight-bold">Welcome <?= $_SESSION['nama_admin'] ?></h3>
                   </div>
 
                 </div>
