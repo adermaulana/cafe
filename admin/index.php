@@ -4,7 +4,7 @@ include '../koneksi.php';
 
 session_start();
 
-if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
+if($_SESSION['status'] != 'login' || !isset($_SESSION['username_admin'])){
 
     header("location:../");
 
@@ -18,7 +18,7 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Pelanggan</title>
+    <title>Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
@@ -91,9 +91,39 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" href="menu.php">
+        <i class="icon-menu menu-icon"></i>
+        <span class="menu-title">Manajemen Menu</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="meja.php">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Manajemen Meja</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="pelanggan.php">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Manajemen Pengguna</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Reservasi</span>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Pembayaran</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Laporan</span>
       </a>
     </li>
   </ul>
@@ -105,7 +135,7 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
               <div class="col-md-12 grid-margin">
                 <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome <?= $_SESSION['nama_pelanggan'] ?></h3>
+                    <h3 class="font-weight-bold">Welcome <?= $_SESSION['nama_admin'] ?></h3>
                   </div>
 
                 </div>

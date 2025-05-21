@@ -4,11 +4,23 @@ include '../koneksi.php';
 
 session_start();
 
-if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
+if($_SESSION['status'] != 'login' || !isset($_SESSION['username_admin'])){
 
     header("location:../");
 
 }
+
+if(isset($_GET['hal']) == "hapus"){
+
+    $hapus = mysqli_query($koneksi, "DELETE FROM pelanggan_221042 WHERE nik_221042 = '$_GET[nik]'");
+  
+    if($hapus){
+        echo "<script>
+        alert('Hapus data sukses!');
+        document.location='pelanggan.php';
+        </script>";
+    }
+  }
 
 ?>
 
@@ -18,7 +30,7 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Pelanggan</title>
+    <title>Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
@@ -31,11 +43,13 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
     <link rel="stylesheet" href="../assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" type="text/css" href="../assets/js/select.dataTables.min.css">
+    
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
+    <link rel="stylesheet" href="lightbox/css/lightbox.min.css">
   </head>
   <body>
     <div class="container-scroller">
@@ -91,37 +105,101 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" href="menu.php">
+        <i class="icon-menu menu-icon"></i>
+        <span class="menu-title">Manajemen Menu</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="meja.php">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Manajemen Meja</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="pelanggan.php">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Manajemen Pengguna</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Reservasi</span>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Pembayaran</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Laporan</span>
       </a>
     </li>
   </ul>
 </nav>
         <!-- partial -->
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
+            <div class="content-wrapper">
                 <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome <?= $_SESSION['nama_pelanggan'] ?></h3>
-                  </div>
-
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Daftar Pelanggan</h4>
+                                <a class="btn btn-success mb-2" href="tambahpelanggan.php">Tambah Pelanggan</a>
+                                <div class="table-responsive">
+                                    <table class="table" id="example">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>NIK</th>
+                                                <th>Nama</th>
+                                                <th>Telepon</th>
+                                                <th>Email</th>
+                                                <th>Username</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $no = 1;
+                                                $tampil = mysqli_query($koneksi, "SELECT * FROM pelanggan_221042");
+                                                while($data = mysqli_fetch_array($tampil)):
+                                            ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $data['nik_221042'] ?></td>
+                                                <td><?= $data['nama_221042'] ?></td>
+                                                <td><?= $data['telepon_221042'] ?></td>
+                                                <td><?= $data['email_221042'] ?></td>
+                                                <td><?= $data['username_221042'] ?></td>
+                                                <td>
+                                                    <a class="btn btn-warning" href="editpelanggan.php?hal=edit&nik=<?= $data['nik_221042']?>">Edit</a>
+                                                    <a class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Pelanggan Ini?')" href="pelanggan.php?hal=hapus&nik=<?= $data['nik_221042']?>">Hapus</a>
+                                                </td>
+                                            </tr>
+                                            <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-
-          </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
-  </div>
-</footer>
-          <!-- partial -->
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023. Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i></span>
+                </div>
+            </footer>
+            <!-- partial -->
         </div>
         <!-- main-panel ends -->
       </div>
@@ -148,6 +226,9 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
     <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="../assets/js/dashboard.js"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
-    <!-- End custom js for this page-->
+    <script src="lightbox/js/lightbox-plus-jquery.js"></script>
+
+
+
   </body>
 </html>

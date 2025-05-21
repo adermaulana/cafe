@@ -14,6 +14,7 @@
         $nama = $_POST['nama'];
         $telepon = $_POST['telepon'];
         $email = $_POST['email'];
+        $nik = $_POST['nik']; // Added NIK field
 
         // Check if the username already exists
         $checkUsername = mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE username_221042='$username'");
@@ -26,8 +27,8 @@
         }
 
         // If the username is not taken, proceed with the registration
-        $simpan = mysqli_query($koneksi, "INSERT INTO pelanggan_221042 (nama_221042, telepon_221042, email_221042, username_221042, password_221042) 
-                                         VALUES ('$nama', '$telepon', '$email', '$username', '$password')");
+        $simpan = mysqli_query($koneksi, "INSERT INTO pelanggan_221042 (nik_221042, nama_221042, telepon_221042, email_221042, username_221042, password_221042) 
+                                         VALUES ('$nik', '$nama', '$telepon', '$email', '$username', '$password')");
 
         if ($simpan) {
             echo "<script>
@@ -76,6 +77,9 @@
                 <h4 class="text-center">Registrasi</h4>
                 </div>
                 <form class="pt-3" method="POST">
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-lg" name="nik" id="nik" placeholder="NIK" required>
+                  </div>
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" name="nama" id="nama" placeholder="Nama Lengkap" required>
                   </div>
