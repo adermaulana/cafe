@@ -14,49 +14,42 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_admin'])){
 if (isset($_POST['simpan'])) {
     $nik = $_POST['nik'];
     $nama = $_POST['nama'];
-    $telepon = $_POST['telepon'];
-    $email = $_POST['email'];
     $username = $_POST['username'];
     $password = md5($_POST['password']); // Hash the password
+    $role = $_POST['role'];
     
     // Check if NIK already exists
-    $check_nik = mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE nik_221042='$nik'");
+    $check_nik = mysqli_query($koneksi, "SELECT * FROM admin_221042 WHERE nik_221042='$nik'");
     if(mysqli_num_rows($check_nik) > 0) {
         echo "<script>
                 alert('Error: NIK sudah terdaftar!');
             </script>";
     } 
     // Check if username already exists
-    else if(mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE username_221042='$username'")) > 0) {
+    else if(mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM admin_221042 WHERE username_221042='$username'")) > 0) {
         echo "<script>
                 alert('Error: Username sudah digunakan!');
             </script>";
-    } 
-    // Check if email already exists
-    else if(mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE email_221042='$email'")) > 0) {
-        echo "<script>
-                alert('Error: Email sudah terdaftar!');
-            </script>";
     } else {
         // Query to save data to database
-        $simpan = mysqli_query($koneksi, "INSERT INTO pelanggan_221042 
-                                        (nik_221042, nama_221042, telepon_221042, email_221042, username_221042, password_221042) 
+        $simpan = mysqli_query($koneksi, "INSERT INTO admin_221042 
+                                        (nik_221042, nama_221042, username_221042, password_221042, role_221042) 
                                         VALUES 
-                                        ('$nik', '$nama', '$telepon', '$email', '$username', '$password')");
+                                        ('$nik', '$nama', '$username', '$password', '$role')");
 
         // Check if save was successful
         if ($simpan) {
             echo "<script>
-                    alert('Pelanggan berhasil ditambahkan!');
-                    document.location='pelanggan.php';
+                    alert('Data berhasil ditambahkan!');
+                    document.location='pengguna.php';
                 </script>";
         } else {
             echo "<script>
-                    alert('Gagal menambahkan pelanggan! " . mysqli_error($koneksi) . "');
+                    alert('Gagal menambahkan data! " . mysqli_error($koneksi) . "');
                 </script>";
         }
     }
-}
+}        
 ?>
 
 <!DOCTYPE html>
@@ -150,7 +143,7 @@ if (isset($_POST['simpan'])) {
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pelanggan.php">
+      <a class="nav-link" href="pengguna.php">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Manajemen Pengguna</span>
       </a>
@@ -182,7 +175,7 @@ if (isset($_POST['simpan'])) {
                     <div class="col-md-8 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Tambah Pelanggan</h4>
+                                <h4 class="card-title">Tambah Pengguna</h4>
                                 <form class="forms-sample" method="POST">
                                     <div class="form-group">
                                         <label for="nik">NIK</label>
@@ -193,14 +186,6 @@ if (isset($_POST['simpan'])) {
                                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="telepon">Nomor Telepon</label>
-                                        <input type="tel" class="form-control" id="telepon" name="telepon" placeholder="Nomor Telepon" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                                     </div>
@@ -208,8 +193,17 @@ if (isset($_POST['simpan'])) {
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="role">Role</label>
+                                        <select class="form-control" id="role" name="role" required>
+                                            <option value="">Pilih Role</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="kasir">Kasir</option>
+                                            <option value="pelayan">Pelayan</option>
+                                        </select>
+                                    </div>
                                     <button type="submit" name="simpan" class="btn btn-primary me-2">Submit</button>
-                                    <a href="pelanggan.php" class="btn btn-light">Cancel</a>
+                                    <a href="pengguna.php" class="btn btn-light">Cancel</a>
                                 </form>
                             </div>
                         </div>

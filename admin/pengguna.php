@@ -1,27 +1,21 @@
 <?php
-
 include '../koneksi.php';
-
 session_start();
 
 if($_SESSION['status'] != 'login' || !isset($_SESSION['username_admin'])){
-
     header("location:../");
-
 }
 
 if(isset($_GET['hal']) == "hapus"){
-
-    $hapus = mysqli_query($koneksi, "DELETE FROM pelanggan_221042 WHERE nik_221042 = '$_GET[nik]'");
+    $hapus = mysqli_query($koneksi, "DELETE FROM admin_221042 WHERE nik_221042 = '$_GET[nik]'");
   
     if($hapus){
         echo "<script>
         alert('Hapus data sukses!');
-        document.location='pelanggan.php';
+        document.location='pengguna.php';
         </script>";
     }
-  }
-
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +33,9 @@ if(isset($_GET['hal']) == "hapus"){
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <!-- <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
     <link rel="stylesheet" href="../assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" type="text/css" href="../assets/js/select.dataTables.min.css">
-    
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -55,93 +47,91 @@ if(isset($_GET['hal']) == "hapus"){
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-    <a class="navbar-brand brand-logo me-5" href="index.php"><img src="" class="me-2" alt="logo" /></a>
-    <a class="navbar-brand brand-logo-mini" href="index.php"><img src="" alt="logo" /></a>
-  </div>
-  <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-      <span class="icon-menu"></span>
-    </button>
-    <ul class="navbar-nav mr-lg-2">
-      <li class="nav-item nav-search d-none d-lg-block">
-        <div class="input-group">
-          <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-            <span class="input-group-text" id="search">
-              <i class="icon-search"></i>
-            </span>
-          </div>
-          <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+          <a class="navbar-brand brand-logo me-5" href="index.php"><img src="" class="me-2" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="" alt="logo" /></a>
         </div>
-      </li>
-    </ul>
-    <ul class="navbar-nav navbar-nav-right">
-
-      <li class="nav-item nav-profile dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-          <img src="../assets/images/faces/face28.jpg" alt="profile" />
-        </a>
-        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="logout.php">
-            <i class="ti-power-off text-primary"></i> Logout </a>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+          <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-search d-none d-lg-block">
+              <div class="input-group">
+                <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                  <span class="input-group-text" id="search">
+                    <i class="icon-search"></i>
+                  </span>
+                </div>
+                <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                <img src="../assets/images/faces/face28.jpg" alt="profile" />
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item" href="logout.php">
+                  <i class="ti-power-off text-primary"></i> Logout </a>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="icon-menu"></span>
+          </button>
         </div>
-      </li>
-    </ul>
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-      <span class="icon-menu"></span>
-    </button>
-  </div>
-</nav>
+      </nav>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link" href="index.php">
-        <i class="icon-grid menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link" href="menu.php">
-        <i class="icon-menu menu-icon"></i>
-        <span class="menu-title">Manajemen Menu</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="meja.php">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title">Manajemen Meja</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="pelanggan.php">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title">Manajemen Pengguna</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title">Reservasi</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title">Pembayaran</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="icon-paper menu-icon"></i>
-        <span class="menu-title">Laporan</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.php">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="menu.php">
+                <i class="icon-menu menu-icon"></i>
+                <span class="menu-title">Manajemen Menu</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="meja.php">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Manajemen Meja</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pengguna.php">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Manajemen Pengguna</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Reservasi</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Pembayaran</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Laporan</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
@@ -149,8 +139,8 @@ if(isset($_GET['hal']) == "hapus"){
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Daftar Pelanggan</h4>
-                                <a class="btn btn-success mb-2" href="tambahpelanggan.php">Tambah Pelanggan</a>
+                                <h4 class="card-title">Daftar Pengguna</h4>
+                                <a class="btn btn-success mb-2" href="tambahpengguna.php">Tambah Pengguna</a>
                                 <div class="table-responsive">
                                     <table class="table" id="example">
                                         <thead>
@@ -158,28 +148,26 @@ if(isset($_GET['hal']) == "hapus"){
                                                 <th>No</th>
                                                 <th>NIK</th>
                                                 <th>Nama</th>
-                                                <th>Telepon</th>
-                                                <th>Email</th>
                                                 <th>Username</th>
+                                                <th>Role</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                                 $no = 1;
-                                                $tampil = mysqli_query($koneksi, "SELECT * FROM pelanggan_221042");
+                                                $tampil = mysqli_query($koneksi, "SELECT * FROM admin_221042");
                                                 while($data = mysqli_fetch_array($tampil)):
                                             ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $data['nik_221042'] ?></td>
                                                 <td><?= $data['nama_221042'] ?></td>
-                                                <td><?= $data['telepon_221042'] ?></td>
-                                                <td><?= $data['email_221042'] ?></td>
                                                 <td><?= $data['username_221042'] ?></td>
+                                                <td><?= $data['role_221042'] ?></td>
                                                 <td>
-                                                    <a class="btn btn-warning" href="editpelanggan.php?hal=edit&nik=<?= $data['nik_221042']?>">Edit</a>
-                                                    <a class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Pelanggan Ini?')" href="pelanggan.php?hal=hapus&nik=<?= $data['nik_221042']?>">Hapus</a>
+                                                    <a class="btn btn-warning" href="editpengguna.php?hal=edit&nik=<?= $data['nik_221042']?>">Edit</a>
+                                                    <a class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Pengguna Ini?')" href="pengguna.php?hal=hapus&nik=<?= $data['nik_221042']?>">Hapus</a>
                                                 </td>
                                             </tr>
                                             <?php endwhile; ?>
@@ -212,7 +200,6 @@ if(isset($_GET['hal']) == "hapus"){
     <!-- Plugin js for this page -->
     <script src="../assets/vendors/chart.js/chart.umd.js"></script>
     <script src="../assets/vendors/datatables.net/jquery.dataTables.js"></script>
-    <!-- <script src="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script> -->
     <script src="../assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
     <script src="../assets/js/dataTables.select.min.js"></script>
     <!-- End plugin js for this page -->
@@ -225,10 +212,6 @@ if(isset($_GET['hal']) == "hapus"){
     <!-- Custom js for this page-->
     <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="../assets/js/dashboard.js"></script>
-    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <script src="lightbox/js/lightbox-plus-jquery.js"></script>
-
-
-
   </body>
 </html>

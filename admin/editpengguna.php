@@ -12,21 +12,19 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_admin'])){
 
 $nik = "";
 $nama = "";
-$telepon = "";
-$email = "";
 $username = "";
+$role = "";
 
 // Check if it's an edit operation
 if(isset($_GET['hal'])){
     if($_GET['hal'] == "edit"){
-        $tampil = mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE nik_221042 = '$_GET[nik]'");
+        $tampil = mysqli_query($koneksi, "SELECT * FROM admin_221042 WHERE nik_221042 = '$_GET[nik]'");
         $data = mysqli_fetch_array($tampil);
         if($data){
             $nik = $data['nik_221042'];
             $nama = $data['nama_221042'];
-            $telepon = $data['telepon_221042'];
-            $email = $data['email_221042'];
             $username = $data['username_221042'];
+            $role = $data['role_221042'];
         }
     }
 }
@@ -35,30 +33,22 @@ if(isset($_GET['hal'])){
 if (isset($_POST['update'])) {
     $nik = $_POST['nik'];
     $nama = $_POST['nama'];
-    $telepon = $_POST['telepon'];
-    $email = $_POST['email'];
     $username = $_POST['username'];
-    $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
+    $role = $_POST['role'];
+    $password = !empty($_POST['password']) ? md5($_POST['password']) : null;
     
     // Check if username is changed and already exists
-    $check_username = mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE username_221042='$username' AND nik_221042 != '$nik'");
+    $check_username = mysqli_query($koneksi, "SELECT * FROM admin_221042 WHERE username_221042='$username' AND nik_221042 != '$nik'");
     if(mysqli_num_rows($check_username) > 0) {
         echo "<script>
                 alert('Error: Username sudah digunakan!');
             </script>";
-    } 
-    // Check if email is changed and already exists
-    else if(mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM pelanggan_221042 WHERE email_221042='$email' AND nik_221042 != '$nik'")) > 0) {
-        echo "<script>
-                alert('Error: Email sudah terdaftar!');
-            </script>";
     } else {
         // Build update query
-        $update_query = "UPDATE pelanggan_221042 SET 
+        $update_query = "UPDATE admin_221042 SET 
                         nama_221042 = '$nama', 
-                        telepon_221042 = '$telepon', 
-                        email_221042 = '$email', 
-                        username_221042 = '$username'";
+                        username_221042 = '$username',
+                        role_221042 = '$role'";
         
         // Only update password if provided
         if($password) {
@@ -73,12 +63,12 @@ if (isset($_POST['update'])) {
         // Check if update was successful
         if ($update) {
             echo "<script>
-                    alert('Data pelanggan berhasil diperbarui!');
-                    document.location='pelanggan.php';
+                    alert('Data berhasil diperbarui!');
+                    document.location='pengguna.php';
                 </script>";
         } else {
             echo "<script>
-                    alert('Gagal memperbarui data pelanggan! " . mysqli_error($koneksi) . "');
+                    alert('Gagal memperbarui data! " . mysqli_error($koneksi) . "');
                 </script>";
         }
     }
@@ -176,7 +166,7 @@ if (isset($_POST['update'])) {
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pelanggan.php">
+      <a class="nav-link" href="pengguna.php">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Manajemen Pengguna</span>
       </a>
@@ -208,7 +198,7 @@ if (isset($_POST['update'])) {
                     <div class="col-md-8 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Edit Pelanggan</h4>
+                                <h4 class="card-title">Edit Pengguna</h4>
                                 <form class="forms-sample" method="POST">
                                     <div class="form-group">
                                         <label for="nik">NIK</label>
@@ -220,16 +210,17 @@ if (isset($_POST['update'])) {
                                         <input type="text" class="form-control" id="nama" name="nama" value="<?= $nama ?>" placeholder="Nama Lengkap" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="telepon">Nomor Telepon</label>
-                                        <input type="tel" class="form-control" id="telepon" name="telepon" value="<?= $telepon ?>" placeholder="Nomor Telepon" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="<?= $email ?>" placeholder="Email" required>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="username">Username</label>
                                         <input type="text" class="form-control" id="username" name="username" value="<?= $username ?>" placeholder="Username" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role">Role</label>
+                                        <select class="form-control" id="role" name="role" required>
+                                            <option value="">Pilih Role</option>
+                                            <option value="admin" <?= ($role == 'admin') ? 'selected' : '' ?>>Admin</option>
+                                            <option value="kasir" <?= ($role == 'kasir') ? 'selected' : '' ?>>Kasir</option>
+                                            <option value="pelayan" <?= ($role == 'pelayan') ? 'selected' : '' ?>>Pelayan</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password Baru</label>
@@ -238,7 +229,7 @@ if (isset($_POST['update'])) {
                                     </div>
 
                                     <button type="submit" name="update" class="btn btn-primary me-2">Update</button>
-                                    <a href="pelanggan.php" class="btn btn-light">Cancel</a>
+                                    <a href="pengguna.php" class="btn btn-light">Cancel</a>
                                 </form>
                             </div>
                         </div>

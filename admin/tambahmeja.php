@@ -139,7 +139,7 @@ if (isset($_POST['simpan'])) {
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pelanggan.php">
+      <a class="nav-link" href="pengguna.php">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Manajemen Pengguna</span>
       </a>
@@ -185,15 +185,7 @@ if (isset($_POST['simpan'])) {
                                         <label for="kapasitas">Kapasitas</label>
                                         <input type="number" class="form-control" id="kapasitas" name="kapasitas" placeholder="Kapasitas" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="status">Status</label>
-                                        <select class="form-control" id="status" name="status" required>
-                                            <option value="">Pilih Status</option>
-                                            <option value="Kosong">Kosong</option>
-                                            <option value="Terisi">Terisi</option>
-                                            <option value="Reservasi">Reservasi</option>
-                                        </select>
-                                    </div>
+                                    <input type="hidden" name="status" value="Kosong">
                                     <button type="submit" name="simpan" class="btn btn-primary me-2">Submit</button>
                                     <a href="meja.php" class="btn btn-light">Cancel</a>
                                 </form>

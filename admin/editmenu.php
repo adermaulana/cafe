@@ -212,7 +212,7 @@ if (isset($_POST['update'])) {
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="pelanggan.php">
+      <a class="nav-link" href="pengguna.php">
         <i class="icon-paper menu-icon"></i>
         <span class="menu-title">Manajemen Pengguna</span>
       </a>
