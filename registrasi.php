@@ -98,7 +98,7 @@
                   <div class="mt-3 d-grid gap-2">
                     <button type="submit" name="registrasi" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">REGISTRASI</button>
                   </div>
-                  <div class="text-center mt-4 font-weight-light"> Sudah Punya Akun? <a href="index.php" class="text-primary">Login</a>
+                  <div class="text-center mt-4 font-weight-light"> Sudah Punya Akun? <a href="login.php" class="text-primary">Login</a>
                   </div>
                 </form>
               </div>

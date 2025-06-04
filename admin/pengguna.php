@@ -119,6 +119,12 @@ if(isset($_GET['hal']) == "hapus"){
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="pesanan.php">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Pesanan</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Pembayaran</span>
