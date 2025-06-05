@@ -89,7 +89,12 @@ if($_SESSION['status'] != 'login' || !isset($_SESSION['username_pelanggan'])){
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
-
+    <li class="nav-item">
+      <a class="nav-link" href="../daftarmenu.php">
+        <i class="icon-grid menu-icon"></i>
+        <span class="menu-title">Pesan Menu</span>
+      </a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" href="pesanan.php">
         <i class="icon-paper menu-icon"></i>
