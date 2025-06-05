@@ -213,7 +213,8 @@ while($item = mysqli_fetch_assoc($query_items)) {
                             <a href="admin" class="header-btn2">Dashboard</a>
                             <a href="logout.php" class="header-btn2">Logout</a>
                         <?php else: ?>
-                            <a href="pengguna" class="header-btn2">Dashboard</a>
+                            <a href="pelanggan" class="header-btn2">Dashboard</a>
+
                             <a href="logout.php" class="header-btn2">Logout</a>
                         <?php endif; ?>
                     <?php else: ?>

@@ -159,7 +159,7 @@ if($isPelanggan && isset($_POST['tambah_keranjang'])) {
                             <a href="admin" class="header-btn2">Dashboard</a>
                             <a href="logout.php" class="header-btn2">Logout</a>
                         <?php else: ?>
-                            <a href="pengguna" class="header-btn2">Dashboard</a>
+                            <a href="pelanggan" class="header-btn2">Dashboard</a>
                             <a href="keranjang.php" class="header-btn2">Keranjang</a>
                             <a href="logout.php" class="header-btn2">Logout</a>
                         <?php endif; ?>
