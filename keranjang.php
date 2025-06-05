@@ -84,7 +84,7 @@ if(isset($_POST['checkout'])) {
     mysqli_query($koneksi, "DELETE FROM keranjang_221042 WHERE nik_pelanggan_221042 = '$nikPelanggan'");
     
     $_SESSION['kode_pesanan'] = $kode_pesanan;
-    header("Location: reservasi.php");
+    header("Location: pelanggan/pesanan.php");
     exit();
 }
 
